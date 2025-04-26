@@ -1,0 +1,64 @@
+﻿@model IEnumerable<SocialWelfarre.Models.AuditTrail>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "/Views/Shared/_DashboardLayout.cshtml";
+
+}
+
+<h1>System Audit Trail</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Action)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Moduie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AffectedTable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeStamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IpAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Action)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Moduie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AffectedTable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IpAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Id)
+            </td>
+            <td>
+         
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+             
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
