@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<SocialWelfarre.Models.Certificate_Of_Indigency>
+@using System.IO
 
 @{
-    ViewData["Title"] = "Certificate of Indigency Applications";
+    ViewData["Title"] = "Food Pack Applications";
     Layout = "/Views/Shared/_DashboardLayout.cshtml";
 }
 
@@ -40,40 +41,114 @@
         flex: 1;
         min-width: 200px;
     }
+
+        /* Style for the icons to make them blue */
+        .form-group label i {
+            color: #007bff;
+            margin-right: 5px;
+        }
+
+    /* Custom file input styling */
+    .custom-file-upload {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+
+        .custom-file-upload input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .custom-file-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        text-align: center;
+    }
+
+        .custom-file-label i {
+            margin-right: 8px;
+        }
+
+        .custom-file-label:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .custom-file-label:active {
+            transform: translateY(1px);
+        }
+
+    /* Ensure validation messages align with the custom styling */
+    .text-danger {
+        margin-top: 5px;
+        display: block;
+    }
 </style>
 
-<!-- Certificate of Indigency Applications Card -->
 <div class="card">
     <div class="card-body">
         <!-- Add Application Form Section -->
         <div class="form-section">
-            <h4><i class="fas fa-plus-circle"></i> Add New Application</h4>
-            <form asp-action="Create" method="post">
+            <h4><i class="fas fa-plus-circle"></i> Request Certificate of Indigency</h4>
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-row">
-                    <div class="form-group">
+                    <div class="form-group col-md-2">
                         <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().FirstName)" class="form-label"><i class="fas fa-user"></i> First Name</label>
                         <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().FirstName)" class="form-control" placeholder="Enter First Name" required />
                         <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().FirstName)" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-2">
                         <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().MiddleName)" class="form-label"><i class="fas fa-user"></i> Middle Name</label>
                         <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().MiddleName)" class="form-control" placeholder="Enter Middle Name" />
                         <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().MiddleName)" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-2">
                         <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().LastName)" class="form-label"><i class="fas fa-user"></i> Last Name</label>
                         <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().LastName)" class="form-control" placeholder="Enter Last Name" required />
                         <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().LastName)" class="text-danger"></span>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
+                    <div class="form-group col-sm-1">
                         <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Age)" class="form-label"><i class="fas fa-birthday-cake"></i> Age</label>
                         <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Age)" class="form-control" type="number" placeholder="Enter Age" required />
                         <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Age)" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-2">
+                        <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().ContactNumber)" class="form-label"><i class="fas fa-phone"></i> Contact Number</label>
+                        <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().ContactNumber)" class="form-control" placeholder="Enter Contact Number" required />
+                        <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().ContactNumber)" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-1">
+                        <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().No_Rquested)" class="form-label"><i class="fas fa-boxes"></i> Request</label>
+                        <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().No_Rquested)" class="form-control" type="number" placeholder="Enter number requested" required />
+                        <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().No_Rquested)" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-sm-1">
+                        <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Address)" class="form-label"><i class="fas fa-home"></i> Address</label>
+                        <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Address)" class="form-control" placeholder="Enter Address" required />
+                        <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Address)" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
                         <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Barangay)" class="form-label"><i class="fas fa-map-marker-alt"></i> Barangay</label>
                         <select asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Barangay)" class="form-select">
                             <option value="">-- Select Barangay --</option>
@@ -84,31 +159,7 @@
                         </select>
                         <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Barangay)" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Address)" class="form-label"><i class="fas fa-home"></i> Address</label>
-                        <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Address)" class="form-control" placeholder="Enter Address" required />
-                        <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Address)" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().ContactNumber)" class="form-label"><i class="fas fa-phone"></i> Contact Number</label>
-                        <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().ContactNumber)" class="form-control" placeholder="Enter Contact Number" required />
-                        <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().ContactNumber)" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Brgy_Cert)" class="form-label"><i class="fas fa-file-alt"></i> Barangay Certificate</label>
-                        <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Brgy_Cert)" class="form-control" placeholder="Enter Barangay Certificate" required />
-                        <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Brgy_Cert)" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Valid_ID)" class="form-label"><i class="fas fa-id-card"></i> Valid ID</label>
-                        <input asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Valid_ID)" class="form-control" placeholder="Enter Valid ID" required />
-                        <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Valid_ID)" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
+                    <div class="form-group col-sm-1">
                         <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Reason)" class="form-label"><i class="fas fa-comment"></i> Reason</label>
                         <select asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Reason)" class="form-select">
                             <option value="">-- Select Reason --</option>
@@ -119,7 +170,7 @@
                         </select>
                         <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Reason)" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-sm-1">
                         <label asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Status)" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
                         <select asp-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Status)" class="form-select">
                             <option value="">-- Select Status --</option>
@@ -131,27 +182,42 @@
                         <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Status)" class="text-danger"></span>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-save"></i> Add Application</button>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="brgyCertFile"><i class="fas fa-file-alt"></i> Barangay Certificate</label>
+                        <div class="custom-file-upload">
+                            <input type="file" name="brgyCertFile" id="brgyCertFile" accept=".jpg,.jpeg,.png,.pdf" required />
+                            <label for="brgyCertFile" class="custom-file-label"><i class="fas fa-upload"></i> Choose File</label>
+                        </div>
+                        <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Brgy_Cert)" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="validIdFile"><i class="fas fa-id-card"></i> Valid ID</label>
+                        <div class="custom-file-upload">
+                            <input type="file" name="validIdFile" id="validIdFile" accept=".jpg,.jpeg,.png,.pdf" required />
+                            <label for="validIdFile" class="custom-file-label"><i class="fas fa-upload"></i> Choose File</label>
+                        </div>
+                        <span asp-validation-for="@(new SocialWelfarre.Models.Certificate_Of_Indigency().Valid_ID)" class="text-danger"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-1"><i class="fas fa-save"></i> Add Application</button>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Applications Table Card -->
-<div class="card mt-4">
+<div class="card">
     <div class="card-body">
         <!-- Applications Table Section -->
-        <div class="form-section">
+        <div class="form-section mt-4">
             <table id="example1" class="table table-striped">
                 <thead>
                     <tr>
                         <th><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.FullName)</th>
-                        <th><i class="fas fa-birthday-cake"></i> @Html.DisplayNameFor(model => model.Age)</th>
                         <th><i class="fas fa-map-marker-alt"></i> @Html.DisplayNameFor(model => model.Barangay)</th>
-                        <th><i class="fas fa-home"></i> @Html.DisplayNameFor(model => model.Address)</th>
-                        <th><i class="fas fa-phone"></i> @Html.DisplayNameFor(model => model.ContactNumber)</th>
-                        <th><i class="fas fa-file-alt"></i> @Html.DisplayNameFor(model => model.Brgy_Cert)</th>
-                        <th><i class="fas fa-id-card"></i> @Html.DisplayNameFor(model => model.Valid_ID)</th>
+                        <th><i class="fas fa-map-marker-alt"></i> @Html.DisplayNameFor(model => model.No_Rquested)</th>
+                        <th><i class="fas fa-file-alt"></i> @Html.DisplayNameFor(model => model.Brgy_Cert_Path)</th>
+                        <th><i class="fas fa-id-card"></i> @Html.DisplayNameFor(model => model.Valid_ID_Path)</th>
                         <th><i class="fas fa-comment"></i> @Html.DisplayNameFor(model => model.Reason)</th>
                         <th><i class="fas fa-info-circle"></i> @Html.DisplayNameFor(model => model.Status)</th>
                         <th>Actions</th>
@@ -162,12 +228,44 @@
                     {
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.FullName)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Age)</td>
                             <td>@Html.DisplayFor(modelItem => item.Barangay)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Address)</td>
-                            <td>@Html.DisplayFor(modelItem => item.ContactNumber)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Brgy_Cert)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Valid_ID)</td>
+                            <td>@Html.DisplayFor(modelItem => item.No_Rquested)</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Brgy_Cert_Path))
+                                {
+                                    var extension = System.IO.Path.GetExtension(item.Brgy_Cert_Path)?.ToLower();
+                                    if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                    {
+                                        <img src="@Url.Content(item.Brgy_Cert_Path)" alt="@item.Brgy_Cert" width="100" />
+                                    }
+                                    else
+                                    {
+                                        <span>Non-image file</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>No file</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Valid_ID_Path))
+                                {
+                                    var extension = System.IO.Path.GetExtension(item.Valid_ID_Path)?.ToLower();
+                                    if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                    {
+                                        <img src="@Url.Content(item.Valid_ID_Path)" alt="@item.Valid_ID" width="100" />
+                                    }
+                                    else
+                                    {
+                                        <span>Non-image file</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>No file</span>
+                                }
+                            </td>
                             <td>@Html.DisplayFor(modelItem => item.Reason)</td>
                             <td>@Html.DisplayFor(modelItem => item.Status)</td>
                             <td>
@@ -182,3 +280,19 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Update the label text to show the selected file name
+        document.querySelectorAll('.custom-file-upload input[type="file"]').forEach(input => {
+            input.addEventListener('change', function () {
+                const label = this.nextElementSibling;
+                const fileName = this.files.length > 0 ? this.files[0].name : 'Choose File';
+                label.innerHTML = `<i class="fas fa-upload"></i> ${fileName}`;
+            });
+        });
+    </script>
+}

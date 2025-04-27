@@ -12,8 +12,8 @@ using SocialWelfarre.Data;
 namespace SocialWelfarre.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250426083737_DisasterKitsUpdated")]
-    partial class DisasterKitsUpdated
+    [Migration("20250427125147_newCertificate")]
+    partial class newCertificate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,6 +180,10 @@ namespace SocialWelfarre.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Brgy_Cert_Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ContactNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -196,6 +200,9 @@ namespace SocialWelfarre.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Packs")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Reason")
                         .HasColumnType("int");
 
@@ -203,6 +210,10 @@ namespace SocialWelfarre.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Valid_ID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Valid_ID_Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -294,7 +305,9 @@ namespace SocialWelfarre.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
+                        .IsUnique()
+                        .HasDatabaseName("EmailIndex")
+                        .HasFilter("[NormalizedEmail] IS NOT NULL");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
@@ -302,6 +315,44 @@ namespace SocialWelfarre.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("SocialWelfarre.Models.AuditTrail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AffectedTable")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Moduie")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AuditTrails");
                 });
 
             modelBuilder.Entity("SocialWelfarre.Models.CertificateOfIndigency", b =>
@@ -364,6 +415,10 @@ namespace SocialWelfarre.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Brgy_Cert_Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ContactNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -387,6 +442,10 @@ namespace SocialWelfarre.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Valid_ID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Valid_ID_Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -433,7 +492,7 @@ namespace SocialWelfarre.Data.Migrations
                     b.ToTable("Consultations");
                 });
 
-            modelBuilder.Entity("SocialWelfarre.Models.DisasterKit", b =>
+            modelBuilder.Entity("SocialWelfarre.Models.DisasterKitTransaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -444,26 +503,21 @@ namespace SocialWelfarre.Data.Migrations
                     b.Property<int>("Barangay")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("LastUpdated")
+                    b.Property<int>("NumberOfPacks")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Reason")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StockIn_Boxes")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StockOutById")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StockOut_Boxes")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StockOut_ById")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<TimeSpan>("TransactionTime")
+                        .HasColumnType("time");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StockOut_ById");
-
-                    b.ToTable("DisasterKits");
+                    b.ToTable("DisasterKitTransactions");
                 });
 
             modelBuilder.Entity("SocialWelfarre.Models.FoodPackForm", b =>
@@ -572,13 +626,15 @@ namespace SocialWelfarre.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SocialWelfarre.Models.DisasterKit", b =>
+            modelBuilder.Entity("SocialWelfarre.Models.AuditTrail", b =>
                 {
-                    b.HasOne("SocialWelfarre.Models.ApplicationUser", "StockOut_By")
+                    b.HasOne("SocialWelfarre.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("StockOut_ById");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("StockOut_By");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,12 +9,17 @@ namespace SocialWelfarre.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string FullName => $"{FirstName} {MiddleName} {LastName}";
+        [Range(1, int.MaxValue, ErrorMessage = "Number of packs must be at least 1.")]
         public int Age { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Age must be at least 1.")]
         public Barangay1? Barangay { get; set; }
+        public int No_Rquested { get; set; }
         public string Address { get; set; }
         public string ContactNumber { get; set; }
         public string Brgy_Cert { get; set; }
+        public string Brgy_Cert_Path { get; set; }
         public string Valid_ID { get; set; }
+        public string Valid_ID_Path { get; set; }
         public Reason1? Reason { get; set; }
         public ActiveStatus1? Status { get; set; }
     }

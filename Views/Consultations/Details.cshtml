@@ -1,0 +1,116 @@
+﻿@model SocialWelfarre.Models.Consultation
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "/Views/Shared/_DashboardLayout.cshtml";
+
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Consultation</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.First_Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.First_Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Middle_Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Middle_Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Last_Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Last_Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Brgy_Cert)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Brgy_Cert)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Brgy_Cert_Path)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Brgy_Cert_Path)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Proof_SoloParent)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Proof_SoloParent)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Proof_SoloParent_Path)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Proof_SoloParent_Path)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Birth_Cert)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Birth_Cert)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Birth_Cert_Path)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Birth_Cert_Path)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Valid_ID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Valid_ID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Valid_ID_Path)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Valid_ID_Path)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.x1_Pic)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.x1_Pic)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.x1_Pic_Path)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.x1_Pic_Path)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Consulatation_Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Consulatation_Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Consultation_Time)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Consultation_Time)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Consultation_status)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Consultation_status)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

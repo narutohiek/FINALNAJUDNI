@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Delete";
+    Layout = "/Views/Shared/_DashboardLayout.cshtml";
+
 }
 
 <h1>Delete</h1>
@@ -65,12 +67,25 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Brgy_Cert)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Brgy_Cert_Path)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Brgy_Cert_Path)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Valid_ID)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Valid_ID)
         </dd>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Valid_ID_Path)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Valid_ID_Path)
+        </dt>
+      
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Reason)
         </dt>

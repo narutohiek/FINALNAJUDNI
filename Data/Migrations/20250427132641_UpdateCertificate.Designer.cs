@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialWelfarre.Data;
 
@@ -11,9 +12,11 @@ using SocialWelfarre.Data;
 namespace SocialWelfarre.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250427132641_UpdateCertificate")]
+    partial class UpdateCertificate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -462,30 +465,14 @@ namespace SocialWelfarre.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Birth_Cert")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Birth_Cert_Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Brgy_Cert")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Brgy_Cert_Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("BeneficiaryId")
+                        .HasColumnType("int");
 
                     b.Property<DateOnly>("Consulatation_Date")
                         .HasColumnType("date");
 
                     b.Property<TimeOnly>("Consultation_Time")
                         .HasColumnType("time");
-
-                    b.Property<int?>("Consultation_status")
-                        .HasColumnType("int");
 
                     b.Property<string>("First_Name")
                         .IsRequired()
@@ -499,27 +486,7 @@ namespace SocialWelfarre.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Proof_SoloParent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Proof_SoloParent_Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Valid_ID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Valid_ID_Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("x1_Pic")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("x1_Pic_Path")
+                    b.Property<string>("consultation_status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

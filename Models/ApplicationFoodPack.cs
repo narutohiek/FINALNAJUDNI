@@ -17,9 +17,11 @@ namespace SocialWelfarre.Models
         public string Address { get; set; }
         public string ContactNumber { get; set; }
         public string Brgy_Cert { get; set; }
+        public string Brgy_Cert_Path { get; set; }
         public string Valid_ID { get; set; }
+        public string Valid_ID_Path { get; set; }
         public Reason? Reason { get; set; }
-        public ActiveStatus? Status { get; set; }
+        public ActiveStatus? Status { get; set; } 
     }
     public enum Barangay
     {
