@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<SocialWelfarre.Models.Consultation>
 
 @{
-    ViewData["Title"] = "Schedule Consultation";
+    ViewData["Title"] = "Consultation Records";
     Layout = "/Views/Shared/_DashboardLayout.cshtml";
 }
+
 <style>
     .form-select {
         border-radius: 8px;
@@ -101,11 +102,12 @@
     }
 </style>
 
+<!-- Consultation Records Card -->
 <div class="card">
     <div class="card-body">
-        <!-- Add Application Form Section -->
+        <!-- Add Consultation Form Section -->
         <div class="form-section">
-            <h4><i class="fas fa-plus-circle"></i> Schedule Consultation</h4>
+            <h4><i class="fas fa-plus-circle"></i> Add New Consultation</h4>
             <form asp-action="Create" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-row">
@@ -116,7 +118,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label asp-for="@(new SocialWelfarre.Models.Consultation().Middle_Name)" class="form-label"><i class="fas fa-user"></i> Middle Name</label>
-                        <input asp-for="@(new SocialWelfarre.Models.Consultation().Middle_Name)" class="form-control" placeholder="Enter Middle Name" />
+                        <input asp-for="@(new SocialWelfarre.Models.Consultation().Middle_Name)" class="form-control" placeholder="Enter Middle Name" required />
                         <span asp-validation-for="@(new SocialWelfarre.Models.Consultation().Middle_Name)" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-2">
@@ -135,17 +137,19 @@
                         <span asp-validation-for="@(new SocialWelfarre.Models.Consultation().Brgy_Cert)" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="SoloParentFile"><i class="fas fa-file-alt"></i> Solo Parent Proof</label>
+                        <label for="proofSoloParentFile"><i class="fas fa-file-alt"></i> Proof of Solo Parent</label>
                         <div class="custom-file-upload">
-                            <input type="file" name="SoloParentFile" id="brgyCertFile" accept=".jpg,.jpeg,.png,.pdf" required />
-                            <label for="SoloParentFile" class="custom-file-label"><i class="fas fa-upload"></i> Choose File</label>
+                            <input type="file" name="proofSoloParentFile" id="proofSoloParentFile" accept=".jpg,.jpeg,.png,.pdf" required />
+                            <label for="proofSoloParentFile" class="custom-file-label"><i class="fas fa-upload"></i> Choose File</label>
                         </div>
                         <span asp-validation-for="@(new SocialWelfarre.Models.Consultation().Proof_SoloParent)" class="text-danger"></span>
                     </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="birthCertFile"><i class="fas fa-file-alt"></i> Birth Certificate</label>
                         <div class="custom-file-upload">
-                            <input type="file" name="birthCertFile" id="brgyCertFile" accept=".jpg,.jpeg,.png,.pdf" required />
+                            <input type="file" name="birthCertFile" id="birthCertFile" accept=".jpg,.jpeg,.png,.pdf" required />
                             <label for="birthCertFile" class="custom-file-label"><i class="fas fa-upload"></i> Choose File</label>
                         </div>
                         <span asp-validation-for="@(new SocialWelfarre.Models.Consultation().Birth_Cert)" class="text-danger"></span>
@@ -158,32 +162,33 @@
                         </div>
                         <span asp-validation-for="@(new SocialWelfarre.Models.Consultation().Valid_ID)" class="text-danger"></span>
                     </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label for="1by1File"><i class="fas fa-id-card"></i> 1x1 Picture</label>
+                        <label for="x1PicFile"><i class="fas fa-image"></i> 1x1 Picture</label>
                         <div class="custom-file-upload">
-                            <input type="file" name="1by1File" id="1by1File" accept=".jpg,.jpeg,.png,.pdf" required />
-                            <label for="1by1File" class="custom-file-label"><i class="fas fa-upload"></i> Choose File</label>
+                            <input type="file" name="x1PicFile" id="x1PicFile" accept=".jpg,.jpeg,.png,.pdf" required />
+                            <label for="x1PicFile" class="custom-file-label"><i class="fas fa-upload"></i> Choose File</label>
                         </div>
                         <span asp-validation-for="@(new SocialWelfarre.Models.Consultation().x1_Pic)" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group">
-                        <label asp-for="@(new SocialWelfarre.Models.Consultation().Consulatation_Date)" class="form-label"><i class="fas fa-clock"></i> Consultation Date</label>
-                        <input asp-for="@(new SocialWelfarre.Models.Consultation().Consulatation_Date)" class="form-control" type="date" required />
-                        <span asp-validation-for="@(new SocialWelfarre.Models.Consultation().Consulatation_Date)" class="text-danger"></span>
+                    <div class="form-group col-md-2">
+                        <label asp-for="@(new SocialWelfarre.Models.Consultation().Consultation_Date)" class="form-label"><i class="fas fa-calendar-alt"></i> Consultation Date</label>
+                        <input asp-for="@(new SocialWelfarre.Models.Consultation().Consultation_Date)" class="form-control" type="date" required />
+                        <span asp-validation-for="@(new SocialWelfarre.Models.Consultation().Consultation_Date)" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-2">
                         <label asp-for="@(new SocialWelfarre.Models.Consultation().Consultation_Time)" class="form-label"><i class="fas fa-clock"></i> Consultation Time</label>
                         <input asp-for="@(new SocialWelfarre.Models.Consultation().Consultation_Time)" class="form-control" type="time" required />
                         <span asp-validation-for="@(new SocialWelfarre.Models.Consultation().Consultation_Time)" class="text-danger"></span>
                     </div>
-                
-                    <div class="form-group col-sm-1">
-                        <label asp-for="@(new SocialWelfarre.Models.Consultation().Consultation_status)" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
+                    <div class="form-group col-md-2">
+                        <label asp-for="@(new SocialWelfarre.Models.Consultation().Consultation_status)" class="form-label"><i class="fas fa-info-circle"></i> Consultation Status</label>
                         <select asp-for="@(new SocialWelfarre.Models.Consultation().Consultation_status)" class="form-select">
                             <option value="">-- Select Status --</option>
-                            @foreach (var status in Html.GetEnumSelectList<ActiveStatus2>())
+                            @foreach (var status in Html.GetEnumSelectList<SocialWelfarre.Models.ActiveStatus2>())
                             {
                                 <option value="@status.Value">@status.Text</option>
                             }
@@ -191,118 +196,150 @@
                         <span asp-validation-for="@(new SocialWelfarre.Models.Consultation().Consultation_status)" class="text-danger"></span>
                     </div>
                 </div>
-             
-                <button type="submit" class="btn btn-primary mt-1"><i class="fas fa-save"></i> Schedule Now</button>
+                <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-save"></i> Add Consultation</button>
             </form>
+        </div>
+
+        <!-- Consultation Table Section -->
+        <div class="table-section mt-4">
+            <table id="example1" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.FullName)</th>
+                        <th><i class="fas fa-file-alt"></i> @Html.DisplayNameFor(model => model.Brgy_Cert_Path)</th>
+                        <th><i class="fas fa-file-alt"></i> @Html.DisplayNameFor(model => model.Proof_SoloParent_Path)</th>
+                        <th><i class="fas fa-file-alt"></i> @Html.DisplayNameFor(model => model.Birth_Cert_Path)</th>
+                        <th><i class="fas fa-id-card"></i> @Html.DisplayNameFor(model => model.Valid_ID_Path)</th>
+                        <th><i class="fas fa-image"></i> @Html.DisplayNameFor(model => model.x1_Pic_Path)</th>
+                        <th><i class="fas fa-calendar-alt"></i> @Html.DisplayNameFor(model => model.Consultation_Date)</th>
+                        <th><i class="fas fa-clock"></i> @Html.DisplayNameFor(model => model.Consultation_Time)</th>
+                        <th><i class="fas fa-info-circle"></i> @Html.DisplayNameFor(model => model.Consultation_status)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Brgy_Cert_Path))
+                                {
+                                    var extension = System.IO.Path.GetExtension(item.Brgy_Cert_Path)?.ToLower();
+                                    if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                    {
+                                        <img src="@Url.Content(item.Brgy_Cert_Path)" alt="@item.Brgy_Cert" width="100" />
+                                    }
+                                    else
+                                    {
+                                        <span>Non-image file</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>No file</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Proof_SoloParent_Path))
+                                {
+                                    var extension = System.IO.Path.GetExtension(item.Proof_SoloParent_Path)?.ToLower();
+                                    if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                    {
+                                        <img src="@Url.Content(item.Proof_SoloParent_Path)" alt="@item.Proof_SoloParent" width="100" />
+                                    }
+                                    else
+                                    {
+                                        <span>Non-image file</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>No file</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Birth_Cert_Path))
+                                {
+                                    var extension = System.IO.Path.GetExtension(item.Birth_Cert_Path)?.ToLower();
+                                    if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                    {
+                                        <img src="@Url.Content(item.Birth_Cert_Path)" alt="@item.Birth_Cert" width="100" />
+                                    }
+                                    else
+                                    {
+                                        <span>Non-image file</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>No file</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Valid_ID_Path))
+                                {
+                                    var extension = System.IO.Path.GetExtension(item.Valid_ID_Path)?.ToLower();
+                                    if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                    {
+                                        <img src="@Url.Content(item.Valid_ID_Path)" alt="@item.Valid_ID" width="100" />
+                                    }
+                                    else
+                                    {
+                                        <span>Non-image file</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>No file</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.x1_Pic_Path))
+                                {
+                                    var extension = System.IO.Path.GetExtension(item.x1_Pic_Path)?.ToLower();
+                                    if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                    {
+                                        <img src="@Url.Content(item.x1_Pic_Path)" alt="@item.x1_Pic" width="100" />
+                                    }
+                                    else
+                                    {
+                                        <span>Non-image file</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>No file</span>
+                                }
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Consultation_Date)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Consultation_Time)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Consultation_status)</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-action"><i class="fa fa-edit"></i> Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-action"><i class="fa fa-eye"></i> View</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-action"><i class="fa fa-trash"></i> Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-<div class="card">
-    <div class="card-body">
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Brgy_Cert)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Brgy_Cert_Path)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Proof_SoloParent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Proof_SoloParent_Path)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Birth_Cert)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Birth_Cert_Path)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valid_ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valid_ID_Path)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.x1_Pic)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.x1_Pic_Path)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Consulatation_Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Consultation_Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Consultation_status)
-            </th>
-            <th></th>
-        </tr>
-     
-    </thead>
-    <tbody>
-   
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brgy_Cert)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brgy_Cert_Path)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Proof_SoloParent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Proof_SoloParent_Path)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Birth_Cert)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Birth_Cert_Path)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valid_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valid_ID_Path)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.x1_Pic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.x1_Pic_Path)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Consulatation_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Consultation_Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Consultation_status)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-    </div>
 
-</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Update the label text to show the selected file name
+        document.querySelectorAll('.custom-file-upload input[type="file"]').forEach(input => {
+            input.addEventListener('change', function () {
+                const label = this.nextElementSibling;
+                const fileName = this.files.length > 0 ? this.files[0].name : 'Choose File';
+                label.innerHTML = `<i class="fas fa-upload"></i> ${fileName}`;
+            });
+        });
+    </script>
+}

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialWelfarre.Data;
 
@@ -11,9 +12,11 @@ using SocialWelfarre.Data;
 namespace SocialWelfarre.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250427162847_ConsultationUpdate")]
+    partial class ConsultationUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,7 +219,7 @@ namespace SocialWelfarre.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApplicationFoodPack", (string)null);
+                    b.ToTable("ApplicationFoodPack");
                 });
 
             modelBuilder.Entity("SocialWelfarre.Models.ApplicationUser", b =>
@@ -349,7 +352,7 @@ namespace SocialWelfarre.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AuditTrails", (string)null);
+                    b.ToTable("AuditTrails");
                 });
 
             modelBuilder.Entity("SocialWelfarre.Models.CertificateOfIndigency", b =>
@@ -387,7 +390,7 @@ namespace SocialWelfarre.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CertificateOfIndigencies", (string)null);
+                    b.ToTable("CertificateOfIndigencies");
                 });
 
             modelBuilder.Entity("SocialWelfarre.Models.Certificate_Of_Indigency", b =>
@@ -451,7 +454,7 @@ namespace SocialWelfarre.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Certificate_Of_Indigencies", (string)null);
+                    b.ToTable("Certificate_Of_Indigencies");
                 });
 
             modelBuilder.Entity("SocialWelfarre.Models.Consultation", b =>
@@ -525,7 +528,7 @@ namespace SocialWelfarre.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Consultations", (string)null);
+                    b.ToTable("Consultations");
                 });
 
             modelBuilder.Entity("SocialWelfarre.Models.DisasterKitTransaction", b =>
@@ -553,7 +556,7 @@ namespace SocialWelfarre.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DisasterKitTransactions", (string)null);
+                    b.ToTable("DisasterKitTransactions");
                 });
 
             modelBuilder.Entity("SocialWelfarre.Models.FoodPackForm", b =>
@@ -608,7 +611,7 @@ namespace SocialWelfarre.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FoodPackForms", (string)null);
+                    b.ToTable("FoodPackForms");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

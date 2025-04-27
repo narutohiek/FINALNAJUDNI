@@ -1,116 +1,329 @@
 ﻿@model SocialWelfarre.Models.Consultation
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Consultation Details";
     Layout = "/Views/Shared/_DashboardLayout.cshtml";
-
 }
 
-<h1>Details</h1>
+<style>
+    .details-section {
+        margin-top: 20px;
+    }
 
-<div>
-    <h4>Consultation</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.First_Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.First_Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Middle_Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Middle_Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Last_Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Last_Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Brgy_Cert)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Brgy_Cert)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Brgy_Cert_Path)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Brgy_Cert_Path)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Proof_SoloParent)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Proof_SoloParent)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Proof_SoloParent_Path)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Proof_SoloParent_Path)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Birth_Cert)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Birth_Cert)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Birth_Cert_Path)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Birth_Cert_Path)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Valid_ID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Valid_ID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Valid_ID_Path)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Valid_ID_Path)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.x1_Pic)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.x1_Pic)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.x1_Pic_Path)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.x1_Pic_Path)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Consulatation_Date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Consulatation_Date)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Consultation_Time)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Consultation_Time)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Consultation_status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Consultation_status)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+        .details-section h4 {
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #343a40;
+            display: flex;
+            align-items: center;
+        }
+
+            .details-section h4 i {
+                color: #007bff;
+                margin-right: 10px;
+            }
+
+        .details-section .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .details-section .card {
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+
+        .details-section .card-body {
+            padding: 15px;
+        }
+
+        .details-section h5 {
+            margin-bottom: 15px;
+            font-weight: 500;
+            color: #343a40;
+            display: flex;
+            align-items: center;
+        }
+
+            .details-section h5 i {
+                color: #007bff;
+                margin-right: 8px;
+            }
+
+        .details-section .form-group {
+            margin-bottom: 10px;
+        }
+
+        .details-section label {
+            font-weight: 500;
+            color: #343a40;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+            .details-section label i {
+                color: #007bff;
+                margin-right: 5px;
+            }
+
+        .details-section input[type="text"] {
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 8px;
+            width: 100%;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .details-section img {
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            transition: transform 0.2s ease-in-out;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+            .details-section img:hover {
+                transform: scale(1.05);
+            }
+
+    .action-buttons {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .action-buttons .btn {
+            margin: 0 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+            .action-buttons .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            }
+
+    .document-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: space-between;
+    }
+
+    .document-item {
+        flex: 1;
+        min-width: 150px;
+        max-width: 200px;
+        text-align: center;
+    }
+</style>
+
+<div class="details-section">
+    <h4><i class="fas fa-info-circle"></i> Consultation Details</h4>
+
+    <div class="row">
+        <!-- Personal Information Card -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5><i class="fas fa-user"></i> Personal Information</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.First_Name)</label>
+                                <input type="text" value="@Model.First_Name" readonly class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.Middle_Name)</label>
+                                <input type="text" value="@Model.Middle_Name" readonly class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.Last_Name)</label>
+                                <input type="text" value="@Model.Last_Name" readonly class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consultation Details Card -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5><i class="fas fa-calendar-check"></i> Consultation Details</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar-alt"></i> @Html.DisplayNameFor(model => model.Consultation_Date)</label>
+                                <input type="text" value="@Model.Consultation_Date" readonly class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-clock"></i> @Html.DisplayNameFor(model => model.Consultation_Time)</label>
+                                <input type="text" value="@Model.Consultation_Time" readonly class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-info-circle"></i> @Html.DisplayNameFor(model => model.Consultation_status)</label>
+                                <input type="text" value="@Model.Consultation_status" readonly class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Uploaded Documents Row -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5><i class="fas fa-file-alt"></i> Uploaded Documents</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="document-row">
+                                <!-- Barangay Certificate -->
+                                <div class="document-item">
+                                    <label><i class="fas fa-file-alt"></i> Barangay Certificate</label>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            @if (!string.IsNullOrEmpty(Model.Brgy_Cert_Path))
+                                            {
+                                                var extension = System.IO.Path.GetExtension(Model.Brgy_Cert_Path)?.ToLower();
+                                                if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                                {
+                                                    <img src="@Url.Content(Model.Brgy_Cert_Path)" alt="@Model.Brgy_Cert" width="150" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" value="Non-image file: @Model.Brgy_Cert" readonly class="form-control" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input type="text" value="No file uploaded" readonly class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Proof of Solo Parent -->
+                                <div class="document-item">
+                                    <label><i class="fas fa-file-alt"></i> Proof of Solo Parent</label>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            @if (!string.IsNullOrEmpty(Model.Proof_SoloParent_Path))
+                                            {
+                                                var extension = System.IO.Path.GetExtension(Model.Proof_SoloParent_Path)?.ToLower();
+                                                if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                                {
+                                                    <img src="@Url.Content(Model.Proof_SoloParent_Path)" alt="@Model.Proof_SoloParent" width="150" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" value="Non-image file: @Model.Proof_SoloParent" readonly class="form-control" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input type="text" value="No file uploaded" readonly class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Birth Certificate -->
+                                <div class="document-item">
+                                    <label><i class="fas fa-file-alt"></i> Birth Certificate</label>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            @if (!string.IsNullOrEmpty(Model.Birth_Cert_Path))
+                                            {
+                                                var extension = System.IO.Path.GetExtension(Model.Birth_Cert_Path)?.ToLower();
+                                                if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                                {
+                                                    <img src="@Url.Content(Model.Birth_Cert_Path)" alt="@Model.Birth_Cert" width="150" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" value="Non-image file: @Model.Birth_Cert" readonly class="form-control" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input type="text" value="No file uploaded" readonly class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Valid ID -->
+                                <div class="document-item">
+                                    <label><i class="fas fa-id-card"></i> Valid ID</label>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            @if (!string.IsNullOrEmpty(Model.Valid_ID_Path))
+                                            {
+                                                var extension = System.IO.Path.GetExtension(Model.Valid_ID_Path)?.ToLower();
+                                                if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                                {
+                                                    <img src="@Url.Content(Model.Valid_ID_Path)" alt="@Model.Valid_ID" width="150" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" value="Non-image file: @Model.Valid_ID" readonly class="form-control" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input type="text" value="No file uploaded" readonly class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 1x1 Picture -->
+                                <div class="document-item">
+                                    <label><i class="fas fa-image"></i> 1x1 Picture</label>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            @if (!string.IsNullOrEmpty(Model.x1_Pic_Path))
+                                            {
+                                                var extension = System.IO.Path.GetExtension(Model.x1_Pic_Path)?.ToLower();
+                                                if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                                {
+                                                    <img src="@Url.Content(Model.x1_Pic_Path)" alt="@Model.x1_Pic" width="150" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" value="Non-image file: @Model.x1_Pic" readonly class="form-control" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input type="text" value="No file uploaded" readonly class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+        <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+    </div>
 </div>
