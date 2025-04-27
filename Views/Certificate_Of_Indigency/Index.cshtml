@@ -134,9 +134,14 @@
                 <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-save"></i> Add Application</button>
             </form>
         </div>
+    </div>
+</div>
 
+<!-- Applications Table Card -->
+<div class="card mt-4">
+    <div class="card-body">
         <!-- Applications Table Section -->
-        <div class="table-section mt-4">
+        <div class="form-section">
             <table id="example1" class="table table-striped">
                 <thead>
                     <tr>
@@ -177,9 +182,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SocialWelfarre.Data;
+using SocialWelfarre.Data.Migrations;
 using SocialWelfarre.Models;
 
 namespace SocialWelfarre.Controllers
@@ -54,16 +56,30 @@ namespace SocialWelfarre.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,MiddleName,LastName,Age,Barangay,Address,ContactNumber,Brgy_Cert,Valid_ID,Reason,Status")] Certificate_Of_Indigency certificate_Of_Indigency)
+        public async Task<IActionResult> Create( Certificate_Of_Indigency certificate_Of_Indigency)
         {
-            if (ModelState.IsValid)
-            {
+           
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(certificate_Of_Indigency);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(certificate_Of_Indigency);
+              
+            
+            var activity = new AuditTrail
+            {
+
+                Action = "Create",
+                TimeStamp = DateTime.Now,
+                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                UserId = userId,
+                Moduie = "Certificate Of Indigency",
+                AffectedTable = "Certificate Of Indigency"
+            };
+            _context.Add(activity);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
         }
+        
 
         // GET: Certificate_Of_Indigency/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -97,8 +113,22 @@ namespace SocialWelfarre.Controllers
             {
                 try
                 {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     _context.Update(certificate_Of_Indigency);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync(); // Save the update first
+
+                    // Insert the AuditTrail here
+                    var activity = new AuditTrail
+                    {
+                        Action = "Edit",
+                        TimeStamp = DateTime.Now,
+                        IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                        UserId = userId,
+                        Moduie = "Certificate Of Indigency",
+                        AffectedTable = "Certificate Of Indigency"
+                    };
+                    _context.Add(activity);
+                    await _context.SaveChangesAsync(); // Save the audit trail
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,6 +146,7 @@ namespace SocialWelfarre.Controllers
             return View(certificate_Of_Indigency);
         }
 
+
         // GET: Certificate_Of_Indigency/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -123,7 +154,6 @@ namespace SocialWelfarre.Controllers
             {
                 return NotFound();
             }
-
             var certificate_Of_Indigency = await _context.Certificate_Of_Indigencies
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (certificate_Of_Indigency == null)
@@ -139,13 +169,23 @@ namespace SocialWelfarre.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var certificate_Of_Indigency = await _context.Certificate_Of_Indigencies.FindAsync(id);
             if (certificate_Of_Indigency != null)
             {
                 _context.Certificate_Of_Indigencies.Remove(certificate_Of_Indigency);
             }
-
-            await _context.SaveChangesAsync();
+            var activity = new AuditTrail
+            {
+                Action = "Delete",
+                TimeStamp = DateTime.Now,
+                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                UserId = userId,
+                Moduie = "Certificate Of Indigency",
+                AffectedTable = "Certificate Of Indigency"
+            };
+            _context.Add(activity);
+            await _context.SaveChangesAsync(); // Save the audit trail
             return RedirectToAction(nameof(Index));
         }
 

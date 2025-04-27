@@ -42,7 +42,6 @@
     }
 </style>
 
-<!-- Food Pack Applications Card -->
 <div class="card">
     <div class="card-body">
         <!-- Add Application Form Section -->
@@ -51,34 +50,44 @@
             <form asp-action="Create" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-row">
-                    <div class="form-group">
+                    <div class="form-group col-md-2">
                         <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().FirstName)" class="form-label"><i class="fas fa-user"></i> First Name</label>
                         <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().FirstName)" class="form-control" placeholder="Enter First Name" required />
                         <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().FirstName)" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-2">
                         <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().MiddleName)" class="form-label"><i class="fas fa-user"></i> Middle Name</label>
                         <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().MiddleName)" class="form-control" placeholder="Enter Middle Name" />
                         <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().MiddleName)" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-2">
                         <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().LastName)" class="form-label"><i class="fas fa-user"></i> Last Name</label>
                         <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().LastName)" class="form-control" placeholder="Enter Last Name" required />
                         <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().LastName)" class="text-danger"></span>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Packs)" class="form-label"><i class="fas fa-boxes"></i> Number of Packs</label>
-                        <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Packs)" class="form-control" type="number" placeholder="Enter Number of Packs" required />
-                        <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Packs)" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
+                    <div class="form-group col-sm-1">
                         <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Age)" class="form-label"><i class="fas fa-birthday-cake"></i> Age</label>
                         <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Age)" class="form-control" type="number" placeholder="Enter Age" required />
                         <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Age)" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-2">
+                        <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().ContactNumber)" class="form-label"><i class="fas fa-phone"></i> Contact Number</label>
+                        <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().ContactNumber)" class="form-control" placeholder="Enter Contact Number" required />
+                        <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().ContactNumber)" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-1">
+                        <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Packs)" class="form-label"><i class="fas fa-boxes"></i> Number of Packs</label>
+                        <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Packs)" class="form-control" type="number" placeholder="Enter Number of Packs" required />
+                        <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Packs)" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-sm-1">
+                        <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Address)" class="form-label"><i class="fas fa-home"></i> Address</label>
+                        <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Address)" class="form-control" placeholder="Enter Address" required />
+                        <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Address)" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
                         <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Barangay)" class="form-label"><i class="fas fa-map-marker-alt"></i> Barangay</label>
                         <select asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Barangay)" class="form-select">
                             <option value="">-- Select Barangay --</option>
@@ -89,33 +98,7 @@
                         </select>
                         <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Barangay)" class="text-danger"></span>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Address)" class="form-label"><i class="fas fa-home"></i> Address</label>
-                        <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Address)" class="form-control" placeholder="Enter Address" required />
-                        <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Address)" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().ContactNumber)" class="form-label"><i class="fas fa-phone"></i> Contact Number</label>
-                        <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().ContactNumber)" class="form-control" placeholder="Enter Contact Number" required />
-                        <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().ContactNumber)" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Brgy_Cert)" class="form-label"><i class="fas fa-file-alt"></i> Barangay Certificate</label>
-                        <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Brgy_Cert)" class="form-control" placeholder="Enter Barangay Certificate" required />
-                        <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Brgy_Cert)" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Valid_ID)" class="form-label"><i class="fas fa-id-card"></i> Valid ID</label>
-                        <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Valid_ID)" class="form-control" placeholder="Enter Valid ID" required />
-                        <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Valid_ID)" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
+                    <div class="form-group col-sm-1">
                         <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Reason)" class="form-label"><i class="fas fa-comment"></i> Reason</label>
                         <select asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Reason)" class="form-select">
                             <option value="">-- Select Reason --</option>
@@ -126,7 +109,7 @@
                         </select>
                         <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Reason)" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-sm-1">
                         <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Status)" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
                         <select asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Status)" class="form-select">
                             <option value="">-- Select Status --</option>
@@ -138,12 +121,27 @@
                         <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Status)" class="text-danger"></span>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-save"></i> Add Application</button>
+                <div class="form-row">
+                    <div class="form-group col-sm-1">
+                        <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Brgy_Cert)" class="form-label"><i class="fas fa-file-alt"></i> Barangay Certificate</label>
+                        <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Brgy_Cert)" class="form-control" placeholder="Enter Barangay Certificate" required />
+                        <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Brgy_Cert)" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Valid_ID)" class="form-label"><i class="fas fa-id-card"></i> Valid ID</label>
+                        <input asp-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Valid_ID)" class="form-control" placeholder="Enter Valid ID" required />
+                        <span asp-validation-for="@(new SocialWelfarre.Models.ApplicationFoodPack().Valid_ID)" class="text-danger"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-1"><i class="fas fa-save"></i> Add Application</button>
             </form>
         </div>
-
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
         <!-- Applications Table Section -->
-        <div class="table-section mt-4">
+        <div class="form-section mt-4">
             <table id="example1" class="table table-striped">
                 <thead>
                     <tr>

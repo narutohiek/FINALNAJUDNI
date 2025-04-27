@@ -247,7 +247,7 @@
                         </li>
                         <li class="nav-item">
                             <a asp-controller="ApplicationFoodPacks1" asp-action="Index" asp-area="" class="nav-link @IsActive("ApplicationFoodPacks1", "Index")">
-                                <i class="nav-icon fas fa-box"></i>
+                                <i class="fas fa-box-open nav-icon"></i>
                                 <p>Food Pack</p>
                             </a>
                         </li>
@@ -266,7 +266,7 @@
 
                         <li class="nav-item @IsTreeviewOpen("", "DisasterKits", "CertificateOfIndigencies")">
                             <a href="#" class="nav-link @IsTreeviewLinkActive("FoodPacks", "DisasterKits", "CertificateOfIndigencies")">
-                                <i class="nav-icon fas fa-hand-holding-heart"></i>
+                                <i class="nav-icon fas fa-warehouse"></i>
                                 <p>
                                     Inventory Management
                                     <i class="fas fa-angle-left right"></i>
@@ -275,7 +275,7 @@
                             <ul class="nav nav-treeview pl-4">
                                 <li class="nav-item">
                                     <a asp-controller="FoodPacksInventories" asp-action="Index" asp-area="" class="nav-link @IsActive("FoodPacksInventories")">
-                                        <i class="fas fa-box-open nav-icon"></i>
+                                        <i class="nav-icon fas fa-box"></i>
                                         <p>Food Pack Inventory</p>
                                     </a>
                                 </li>
@@ -292,14 +292,14 @@
                      
                         <li class="nav-item">
                             <a asp-controller="Consultations" asp-action="Index" asp-area="" class="nav-link @IsActive("Consultations")">
-                                <i class="nav-icon fas fa-user-md"></i>
+                                <i class="nav-icon fas fa-comments"></i>
                                 <p>Consultations</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a asp-controller="AuditTrails" asp-action="Index" asp-area="" class="nav-link @IsActive("AuditTrails")">
-                                <i class="nav-icon fas fa-user-md"></i>
+                                <i class="nav-icon fas fa-clipboard-list"></i>
                                 <p>AuditTrails</p>
                             </a>
                         </li>

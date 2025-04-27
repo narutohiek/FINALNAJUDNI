@@ -52,8 +52,7 @@ namespace SocialWelfarre.Controllers
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 ApplicationUser registereduser = new();
              
-                registereduser.EmpNo = user.EmpNo;
-               
+                registereduser.EmpNo = user.EmpNo;  
                 registereduser.First_Name = user.First_Name;
                 registereduser.Middle_Name = user.Middle_Name;
                 registereduser.Last_Name = user.Last_Name;
@@ -112,6 +111,7 @@ namespace SocialWelfarre.Controllers
             {
                 try
                 {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     var user = await _userManager.FindByIdAsync(id);
                     if (user == null)
                     {
@@ -120,7 +120,6 @@ namespace SocialWelfarre.Controllers
 
                     // Update the properties
                     user.EmpNo = model.EmpNo;
-             
                     user.First_Name = model.First_Name;
                     user.Middle_Name = model.Middle_Name;
                     user.Last_Name = model.Last_Name;
@@ -132,6 +131,19 @@ namespace SocialWelfarre.Controllers
                     user.Address = model.Address;
 
                     await _userManager.UpdateAsync(user);
+
+                    // Insert Audit Trail after successful update
+                    var activity = new AuditTrail
+                    {
+                        Action = "Edit",
+                        TimeStamp = DateTime.Now,
+                        IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                        UserId = userId,
+                        Moduie = "User Management",
+                        AffectedTable = "AspNetUsers" // Or whatever your Users table is named
+                    };
+                    _context.Add(activity);
+                    await _context.SaveChangesAsync();
 
                     return RedirectToAction(nameof(Index));
                 }

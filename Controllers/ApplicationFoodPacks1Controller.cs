@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SocialWelfarre.Data;
+using SocialWelfarre.Data.Migrations;
 using SocialWelfarre.Models;
 
 namespace SocialWelfarre.Controllers
@@ -56,14 +58,25 @@ namespace SocialWelfarre.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,MiddleName,LastName,Packs,Age,Barangay,Address,ContactNumber,Brgy_Cert,Valid_ID,Reason,Status")] ApplicationFoodPack applicationFoodPack)
         {
-            if (ModelState.IsValid)
-            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(applicationFoodPack);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(applicationFoodPack);
+                
+
+            var activity = new AuditTrail
+            {
+                Action = "Create",
+                TimeStamp = DateTime.Now,
+                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                UserId = userId,
+                Moduie = "Food Packs",
+                AffectedTable = "Food Packs"
+            };
+            _context.Add(activity);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
+         
 
         // GET: ApplicationFoodPacks1/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -97,8 +110,23 @@ namespace SocialWelfarre.Controllers
             {
                 try
                 {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // <-- get user ID
+
                     _context.Update(applicationFoodPack);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync(); // <-- save update first
+
+                    // INSERT your AuditTrail HERE after successful update
+                    var activity = new AuditTrail
+                    {
+                        Action = "Edit",
+                        TimeStamp = DateTime.Now,
+                        IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                        UserId = userId,
+                        Moduie = "Food Packs",
+                        AffectedTable = "Food Packs"
+                    };
+                    _context.Add(activity);
+                    await _context.SaveChangesAsync(); // <-- save audit trail
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -111,10 +139,12 @@ namespace SocialWelfarre.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(applicationFoodPack);
         }
+
 
         // GET: ApplicationFoodPacks1/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -139,12 +169,22 @@ namespace SocialWelfarre.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // <-- get user ID
             var applicationFoodPack = await _context.ApplicationFoodPack.FindAsync(id);
             if (applicationFoodPack != null)
             {
                 _context.ApplicationFoodPack.Remove(applicationFoodPack);
             }
-
+            var activity = new AuditTrail
+            {
+                Action = "Delete",
+                TimeStamp = DateTime.Now,
+                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                UserId = userId,
+                Moduie = "Food Packs",
+                AffectedTable = "Food Packs"
+            };
+            _context.Add(activity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

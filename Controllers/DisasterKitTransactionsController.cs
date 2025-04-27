@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -56,13 +57,25 @@ namespace SocialWelfarre.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Barangay,Reason,TransactionDate,TransactionTime,NumberOfPacks")] DisasterKitTransaction disasterKitTransaction)
         {
-            if (ModelState.IsValid)
-            {
+         
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(disasterKitTransaction);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(disasterKitTransaction);
+            
+            
+            var activity = new AuditTrail
+            {
+
+                Action = "Create",
+                TimeStamp = DateTime.Now,
+                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                UserId = userId,
+                Moduie = "Disaster Kit",
+                AffectedTable = "Disaster Kit"
+            };
+            _context.Add(activity);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: DisasterKitTransactions/Edit/5
@@ -97,8 +110,22 @@ namespace SocialWelfarre.Controllers
             {
                 try
                 {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     _context.Update(disasterKitTransaction);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync(); // Save the update first
+
+                    // Insert the AuditTrail after successful update
+                    var activity = new AuditTrail
+                    {
+                        Action = "Edit",
+                        TimeStamp = DateTime.Now,
+                        IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                        UserId = userId,
+                        Moduie = "Disaster Kit Transaction",
+                        AffectedTable = "DisasterKitTransaction"
+                    };
+                    _context.Add(activity);
+                    await _context.SaveChangesAsync(); // Save the audit trail
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -139,13 +166,23 @@ namespace SocialWelfarre.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var disasterKitTransaction = await _context.DisasterKitTransactions.FindAsync(id);
             if (disasterKitTransaction != null)
             {
                 _context.DisasterKitTransactions.Remove(disasterKitTransaction);
             }
-
-            await _context.SaveChangesAsync();
+            var activity = new AuditTrail
+            {
+                Action = "Delete",
+                TimeStamp = DateTime.Now,
+                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                UserId = userId,
+                Moduie = "Disaster Kit Transaction",
+                AffectedTable = "DisasterKitTransaction"
+            };
+            _context.Add(activity);
+            await _context.SaveChangesAsync(); // Save the audit trail
             return RedirectToAction(nameof(Index));
         }
 
