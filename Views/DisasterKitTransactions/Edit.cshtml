@@ -6,150 +6,194 @@
 }
 
 <style>
-    .form-select {
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ced4da;
-        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    .details-section {
+        margin-top: 20px;
     }
 
-        .form-select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-            outline: none;
+        .details-section h4 {
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #343a40;
+            display: flex;
+            align-items: center;
         }
 
-        .form-select:hover {
-            border-color: #6c757d;
+            .details-section h4 i {
+                color: #007bff;
+                margin-right: 10px;
+            }
+
+        .details-section .row {
+            display: flex;
+            flex-wrap: wrap;
         }
 
-    .form-group label {
-        font-weight: 500;
-        color: #343a40;
-        margin-bottom: 8px;
-    }
-
-    .form-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .form-group {
-        flex: 1;
-        min-width: 200px;
-    }
-
-        /* Style for the icons to make them blue */
-        .form-group label i {
-            color: #007bff;
-            margin-right: 5px;
-        }
-
-    /* Custom file input styling */
-    .custom-file-upload {
-        position: relative;
-        display: inline-block;
-        width: 100%;
-    }
-
-        .custom-file-upload input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+        .details-section .card {
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             height: 100%;
-            opacity: 0;
-            cursor: pointer;
         }
 
-    .custom-file-label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px 15px;
-        background-color: #007bff;
-        color: white;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        width: 100%;
+        .details-section .card-body {
+            padding: 15px;
+        }
+
+        .details-section h5 {
+            margin-bottom: 15px;
+            font-weight: 500;
+            color: #343a40;
+            display: flex;
+            align-items: center;
+        }
+
+            .details-section h5 i {
+                color: #007bff;
+                margin-right: 8px;
+            }
+
+        .details-section .form-group {
+            margin-bottom: 10px;
+        }
+
+        .details-section label {
+            font-weight: 500;
+            color: #343a40;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+            .details-section label i {
+                color: #007bff;
+                margin-right: 5px;
+            }
+
+        .details-section input[type="text"],
+        .details-section input[type="number"],
+        .details-section select,
+        .details-section input[type="date"],
+        .details-section input[type="time"] {
+            background-color: #fff;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 8px;
+            width: 100%;
+            color: #495057;
+            font-size: 14px;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+            .details-section input[type="text"]:focus,
+            .details-section input[type="number"]:focus,
+            .details-section select:focus,
+            .details-section input[type="date"]:focus,
+            .details-section input[type="time"]:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+                outline: none;
+            }
+
+            .details-section input[type="text"]:hover,
+            .details-section input[type="number"]:hover,
+            .details-section select:hover,
+            .details-section input[type="date"]:hover,
+            .details-section input[type="time"]:hover {
+                border-color: #6c757d;
+            }
+
+    .action-buttons {
+        margin-top: 20px;
         text-align: center;
     }
 
-        .custom-file-label i {
-            margin-right: 8px;
+        .action-buttons .btn {
+            margin: 0 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
-        .custom-file-label:hover {
-            background-color: #0056b3;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            transform: translateY(-1px);
-        }
+            .action-buttons .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            }
 
-        .custom-file-label:active {
-            transform: translateY(1px);
-        }
-
-    /* Ensure validation messages align with the custom styling */
     .text-danger {
         margin-top: 5px;
         display: block;
+        font-size: 12px;
     }
 </style>
 
-<div class="card">
-    <div class="card-body">
-        <!-- Edit DisasterKitTransaction Form Section -->
-        <div class="form-section">
-            <h4><i class="fas fa-edit"></i> Edit Disaster Kit Transaction</h4>
-            <form asp-action="Edit" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label asp-for="Barangay" class="form-label"><i class="fas fa-map-marker-alt"></i> Barangay</label>
-                        <select asp-for="Barangay" class="form-select" asp-items="Html.GetEnumSelectList<Barangay>()">
-                            <option value="">-- Select Barangay --</option>
-                        </select>
-                        <span asp-validation-for="Barangay" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="Reason" class="form-label"><i class="fas fa-comment"></i> Reason</label>
-                        <select asp-for="Reason" class="form-select" asp-items="Html.GetEnumSelectList<Reason>()">
-                            <option value="">-- Select Reason --</option>
-                        </select>
-                        <span asp-validation-for="Reason" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label asp-for="TransactionDate" class="control-label"><i class="fas fa-calendar-day"></i> Transaction Date</label>
-                        <input asp-for="TransactionDate" class="form-control" />
-                        <span asp-validation-for="TransactionDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="TransactionTime" class="control-label"><i class="fas fa-clock"></i> Transaction Time</label>
-                        <input asp-for="TransactionTime" class="form-control" />
-                        <span asp-validation-for="TransactionTime" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="NumberOfPacks" class="control-label"><i class="fas fa-boxes"></i> Number of Packs</label>
-                        <input asp-for="NumberOfPacks" class="form-control" />
-                        <span asp-validation-for="NumberOfPacks" class="text-danger"></span>
+<div class="details-section">
+    <h4><i class="fas fa-edit"></i> Edit Disaster Kit Transaction</h4>
+
+    <form asp-action="Edit" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row">
+            <!-- Transaction Details Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5><i class="fas fa-boxes"></i> Transaction Details</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label asp-for="Barangay"><i class="fas fa-map-marker-alt"></i> Barangay</label>
+                                    <select asp-for="Barangay" class="form-control" asp-items="Html.GetEnumSelectList<Barangay>()">
+                                        <option value="">-- Select Barangay --</option>
+                                    </select>
+                                    <span asp-validation-for="Barangay" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="NumberOfPacks"><i class="fas fa-boxes"></i> Number of Packs</label>
+                                    <input asp-for="NumberOfPacks" class="form-control" type="number" placeholder="Enter Number of Packs" />
+                                    <span asp-validation-for="NumberOfPacks" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary mt-1"><i class="fas fa-save"></i> Save</button>
-                    <a asp-action="Index" class="btn btn-secondary mt-1"><i class="fas fa-arrow-left"></i> Back to List</a>
+            </div>
+
+            <!-- Additional Information Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5><i class="fas fa-info-circle"></i> Additional Information</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label asp-for="Reason"><i class="fas fa-comment"></i> Reason</label>
+                                    <select asp-for="Reason" class="form-control" asp-items="Html.GetEnumSelectList<Reason>()">
+                                        <option value="">-- Select Reason --</option>
+                                    </select>
+                                    <span asp-validation-for="Reason" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TransactionDate"><i class="fas fa-calendar-day"></i> Transaction Date</label>
+                                    <input asp-for="TransactionDate" class="form-control" type="date" />
+                                    <span asp-validation-for="TransactionDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TransactionTime"><i class="fas fa-clock"></i> Transaction Time</label>
+                                    <input asp-for="TransactionTime" class="form-control" type="time" />
+                                    <span asp-validation-for="TransactionTime" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+            <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

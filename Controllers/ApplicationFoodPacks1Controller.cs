@@ -164,6 +164,124 @@ namespace SocialWelfarre.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        public IActionResult FoodPackPending()
+        {
+            return View();
+        }
+        // POST: ApplicationFoodPacks1/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FoodPackPending(
+     [Bind("Id,FirstName,MiddleName,LastName,Packs,Age,Barangay,Address,ContactNumber,Reason,Status")] ApplicationFoodPack applicationFoodPack,
+     IFormFile brgyCertFile,
+     IFormFile validIdFile)
+        {
+            // Validate uploaded files
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".pdf" };
+            var maxFileSize = 5 * 1024 * 1024; // 5 MB
+
+            // Validate Barangay Certificate file
+            if (brgyCertFile != null && brgyCertFile.Length > 0)
+            {
+                var extension = Path.GetExtension(brgyCertFile.FileName).ToLower();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("brgyCertFile", "Only .jpg, .jpeg, .png, and .pdf files are allowed for Barangay Certificate.");
+                    return View(applicationFoodPack);
+                }
+                if (brgyCertFile.Length > maxFileSize)
+                {
+                    ModelState.AddModelError("brgyCertFile", "Barangay Certificate file size cannot exceed 5 MB.");
+                    return View(applicationFoodPack);
+                }
+
+                var directoryPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads", "brgy_certs");
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                var fileName = Guid.NewGuid().ToString() + extension;
+                var filePath = Path.Combine(directoryPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await brgyCertFile.CopyToAsync(stream);
+                }
+
+                applicationFoodPack.Brgy_Cert = fileName;
+                applicationFoodPack.Brgy_Cert_Path = "/uploads/brgy_certs/" + fileName;
+            }
+            else
+            {
+                ModelState.AddModelError("brgyCertFile", "Please upload a Barangay Certificate.");
+                return View(applicationFoodPack);
+            }
+
+            // Validate Valid ID file
+            if (validIdFile != null && validIdFile.Length > 0)
+            {
+                var extension = Path.GetExtension(validIdFile.FileName).ToLower();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("validIdFile", "Only .jpg, .jpeg, .png, and .pdf files are allowed for Valid ID.");
+                    return View(applicationFoodPack);
+                }
+                if (validIdFile.Length > maxFileSize)
+                {
+                    ModelState.AddModelError("validIdFile", "Valid ID file size cannot exceed 5 MB.");
+                    return View(applicationFoodPack);
+                }
+
+                var directoryPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads", "valid_ids");
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                var fileName = Guid.NewGuid().ToString() + extension;
+                var filePath = Path.Combine(directoryPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await validIdFile.CopyToAsync(stream);
+                }
+
+                applicationFoodPack.Valid_ID = fileName;
+                applicationFoodPack.Valid_ID_Path = "/uploads/valid_ids/" + fileName;
+            }
+            else
+            {
+                ModelState.AddModelError("validIdFile", "Please upload a Valid ID.");
+                return View(applicationFoodPack);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Set Status to Pending before saving
+            applicationFoodPack.Status = ActiveStatus.Pending;
+
+            _context.Add(applicationFoodPack);
+            await _context.SaveChangesAsync();
+
+            // Audit trail logging
+            var activity = new AuditTrail
+            {
+                Action = "Create",
+                TimeStamp = DateTime.Now,
+                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                UserId = userId,
+                Moduie = "Food Packs",
+                AffectedTable = "Food Packs"
+            };
+            _context.Add(activity);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(FoodPackPending));
+        }
+
+
         // GET: ApplicationFoodPacks1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
