@@ -14,21 +14,19 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Linq;
 using System.Security;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
+using SocialWelfarre.Services;
 
 
 namespace SocialWelfarre.Controllers
 { public class ApplicationFoodPacks1Controller : Controller
-    { private readonly ApplicationDbContext _context; private readonly IWebHostEnvironment _hostingEnvironment; 
-         public ApplicationFoodPacks1Controller(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment)
+    { private readonly ApplicationDbContext _context; private readonly IWebHostEnvironment _hostingEnvironment; private readonly SmsService _smsService;
+        public ApplicationFoodPacks1Controller(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment, SmsService smsService)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
+            _smsService = smsService;  // Inject SmsService
         }
 
         // GET: ApplicationFoodPacks1
@@ -147,6 +145,9 @@ namespace SocialWelfarre.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Parse the string value to the ActiveStatus enum
+            applicationFoodPack.Status = (ActiveStatus)Enum.Parse(typeof(ActiveStatus), "Approved");
             _context.Add(applicationFoodPack);
             await _context.SaveChangesAsync();
 
@@ -161,8 +162,10 @@ namespace SocialWelfarre.Controllers
             };
             _context.Add(activity);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
+
 
 
         public IActionResult FoodPackPending()
@@ -260,7 +263,8 @@ namespace SocialWelfarre.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             // Set Status to Pending before saving
-            applicationFoodPack.Status = ActiveStatus.Pending;
+            // Parse the string value to the ActiveStatus enum
+            applicationFoodPack.Status = (ActiveStatus)Enum.Parse(typeof(ActiveStatus), "Pending");
 
             _context.Add(applicationFoodPack);
             await _context.SaveChangesAsync();
@@ -509,6 +513,50 @@ namespace SocialWelfarre.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        // POST: Picture/UpdateStatus/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateStatus(int id, string status)
+        {
+            var picture = await _context.ApplicationFoodPack.FindAsync(id);
+            if (picture == null)
+            {
+                return NotFound();
+            }
+
+            if (string.IsNullOrWhiteSpace(status))
+            {
+                return BadRequest("Status is required.");
+            }
+
+            // Accept only "Accepted" or "Rejected"
+            if (status.Equals("Accepted", StringComparison.OrdinalIgnoreCase))
+            {
+                picture.Status = ActiveStatus.Approved;
+            }
+            else if (status.Equals("Rejected", StringComparison.OrdinalIgnoreCase))
+            {
+                picture.Status = ActiveStatus.Denied;
+            }
+            else
+            {
+                return BadRequest("Invalid status value. Only 'Accepted' or 'Rejected' are allowed.");
+            }
+
+            _context.Update(picture);
+            await _context.SaveChangesAsync();
+
+            // Send SMS message
+            string message = picture.Status == ActiveStatus.Approved
+                ? "Your request has been accepted."
+                : "Your request has been rejected.";
+
+            await _smsService.SendSmsAsync(picture.ContactNumber, message);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
 
         private bool ApplicationFoodPackExists(int id)
         {

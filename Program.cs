@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SocialWelfarre.Data;
 using SocialWelfarre.Models;
+using SocialWelfarre.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddRoles<IdentityRole>()
     .AddDefaultUI()
     .AddErrorDescriber<IdentityErrorDescriber>();
-
+// Register the SmsService for Dependency Injection
+builder.Services.AddHttpClient<SmsService>(); // Register HttpClient for SmsService
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.User.RequireUniqueEmail = true; // Enforce unique emails
@@ -36,15 +38,15 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+/// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 }
 else
 {
     app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

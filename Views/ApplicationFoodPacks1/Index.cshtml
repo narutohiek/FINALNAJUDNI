@@ -5,103 +5,114 @@
     ViewData["Title"] = "Food Pack Applications";
     Layout = "/Views/Shared/_DashboardLayout.cshtml";
 }
-
-<style>
-    .form-select {
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ced4da;
-        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    }
-
-        .form-select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-            outline: none;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Navigation Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- FontAwesome for icons -->
+    <style>
+        .form-select {
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
-        .form-select:hover {
-            border-color: #6c757d;
+            .form-select:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+                outline: none;
+            }
+
+            .form-select:hover {
+                border-color: #6c757d;
+            }
+
+        .form-group label {
+            font-weight: 500;
+            color: #343a40;
+            margin-bottom: 8px;
         }
 
-    .form-group label {
-        font-weight: 500;
-        color: #343a40;
-        margin-bottom: 8px;
-    }
-
-    .form-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .form-group {
-        flex: 1;
-        min-width: 200px;
-    }
-
-        /* Style for the icons to make them blue */
-        .form-group label i {
-            color: #007bff;
-            margin-right: 5px;
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-    /* Custom file input styling */
-    .custom-file-upload {
-        position: relative;
-        display: inline-block;
-        width: 100%;
-    }
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
 
-        .custom-file-upload input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
+            /* Style for the icons to make them blue */
+            .form-group label i {
+                color: #007bff;
+                margin-right: 5px;
+            }
+
+        /* Custom file input styling */
+        .custom-file-upload {
+            position: relative;
+            display: inline-block;
             width: 100%;
-            height: 100%;
-            opacity: 0;
+        }
+
+            .custom-file-upload input[type="file"] {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+        .custom-file-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            text-align: center;
         }
 
-    .custom-file-label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px 15px;
-        background-color: #007bff;
-        color: white;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        text-align: center;
-    }
+            .custom-file-label i {
+                margin-right: 8px;
+            }
 
-        .custom-file-label i {
-            margin-right: 8px;
+            .custom-file-label:hover {
+                background-color: #0056b3;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+                transform: translateY(-1px);
+            }
+
+            .custom-file-label:active {
+                transform: translateY(1px);
+            }
+
+        /* Ensure validation messages align with the custom styling */
+        .text-danger {
+            margin-top: 5px;
+            display: block;
         }
+    </style>
 
-        .custom-file-label:hover {
-            background-color: #0056b3;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            transform: translateY(-1px);
-        }
-
-        .custom-file-label:active {
-            transform: translateY(1px);
-        }
-
-    /* Ensure validation messages align with the custom styling */
-    .text-danger {
-        margin-top: 5px;
-        display: block;
-    }
-</style>
+</head>
+<body>
 
 <div class="card">
     <div class="card-body">
@@ -206,80 +217,249 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-body">
-        <!-- Applications Table Section -->
-        <div class="form-section mt-4">
-            <table id="example1" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.FullName)</th>
-                        <th><i class="fas fa-boxes"></i> @Html.DisplayNameFor(model => model.Packs)</th>
-                        <th><i class="fas fa-map-marker-alt"></i> @Html.DisplayNameFor(model => model.Barangay)</th>
-                        <th><i class="fas fa-file-alt"></i> @Html.DisplayNameFor(model => model.Brgy_Cert_Path)</th>
-                        <th><i class="fas fa-id-card"></i> @Html.DisplayNameFor(model => model.Valid_ID_Path)</th>
-                        <th><i class="fas fa-comment"></i> @Html.DisplayNameFor(model => model.Reason)</th>
-                        <th><i class="fas fa-info-circle"></i> @Html.DisplayNameFor(model => model.Status)</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@Html.DisplayFor(modelItem => item.FullName)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Packs)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Barangay)</td>
-                            <td>
-                                @if (!string.IsNullOrEmpty(item.Brgy_Cert_Path))
-                                {
-                                    var extension = System.IO.Path.GetExtension(item.Brgy_Cert_Path)?.ToLower();
-                                    if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
-                                    {
-                                        <img src="@Url.Content(item.Brgy_Cert_Path)" alt="@item.Brgy_Cert" width="100" />
-                                    }
-                                    else
-                                    {
-                                        <span>Non-image file</span>
-                                    }
-                                }
-                                else
-                                {
-                                    <span>No file</span>
-                                }
-                            </td>
-                            <td>
-                                @if (!string.IsNullOrEmpty(item.Valid_ID_Path))
-                                {
-                                    var extension = System.IO.Path.GetExtension(item.Valid_ID_Path)?.ToLower();
-                                    if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
-                                    {
-                                        <img src="@Url.Content(item.Valid_ID_Path)" alt="@item.Valid_ID" width="100" />
-                                    }
-                                    else
-                                    {
-                                        <span>Non-image file</span>
-                                    }
-                                }
-                                else
-                                {
-                                    <span>No file</span>
-                                }
-                            </td>
-                            <td>@Html.DisplayFor(modelItem => item.Reason)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-action"><i class="fa fa-edit"></i> Edit</a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-action"><i class="fa fa-eye"></i> View</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-action"><i class="fa fa-trash"></i> Delete</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+    @{
+        var pendingStatus = ActiveStatus.Pending.ToString();
+        var acceptedStatus = ActiveStatus.Approved.ToString();
+        var rejectedStatus = ActiveStatus.Denied.ToString();
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <!-- Tabs for Pending, Accepted, Rejected -->
+            <ul class="nav nav-tabs" id="pictureTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="pending-tab" data-bs-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="true">Pending</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="accepted-tab" data-bs-toggle="tab" href="#accepted" role="tab" aria-controls="accepted" aria-selected="false">Accepted</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="rejected-tab" data-bs-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">Rejected</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="pictureTabContent">
+                <!-- Pending Tab -->
+                <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                    <h3>Pending Applications</h3>
+                    <table class="table table-striped table-bordered" id="pendingTable">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.FullName)</th>
+                                <th><i class="fas fa-boxes"></i> @Html.DisplayNameFor(model => model.Packs)</th>
+                                <th><i class="fas fa-map-marker-alt"></i> @Html.DisplayNameFor(model => model.Barangay)</th>
+                                <th><i class="fas fa-file-alt"></i> @Html.DisplayNameFor(model => model.Brgy_Cert_Path)</th>
+                                <th><i class="fas fa-id-card"></i> @Html.DisplayNameFor(model => model.Valid_ID_Path)</th>
+                                <th><i class="fas fa-comment"></i> @Html.DisplayNameFor(model => model.Reason)</th>
+                                <th><i class="fas fa-info-circle"></i> @Html.DisplayNameFor(model => model.Status)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Where(x => (x.Status == null) || Enum.GetName(typeof(ActiveStatus), x.Status) == pendingStatus))
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Packs)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Barangay)</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Brgy_Cert_Path))
+                                        {
+                                            var extension = System.IO.Path.GetExtension(item.Brgy_Cert_Path)?.ToLower();
+                                            if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                            {
+                                                <img src="@Url.Content(item.Brgy_Cert_Path)" alt="@item.Brgy_Cert" width="100" />
+                                            }
+                                            else
+                                            {
+                                                <span>Non-image file</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span>No file</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Valid_ID_Path))
+                                        {
+                                            var extension = System.IO.Path.GetExtension(item.Valid_ID_Path)?.ToLower();
+                                            if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                            {
+                                                <img src="@Url.Content(item.Valid_ID_Path)" alt="@item.Valid_ID" width="100" />
+                                            }
+                                            else
+                                            {
+                                                <span>Non-image file</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span>No file</span>
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Reason)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Details</a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Accepted Tab -->
+                <div class="tab-pane fade" id="accepted" role="tabpanel" aria-labelledby="accepted-tab">
+                    <h3>Accepted Applications</h3>
+                    <table class="table table-striped table-bordered" id="acceptedTable">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.FullName)</th>
+                                <th><i class="fas fa-boxes"></i> @Html.DisplayNameFor(model => model.Packs)</th>
+                                <th><i class="fas fa-map-marker-alt"></i> @Html.DisplayNameFor(model => model.Barangay)</th>
+                                <th><i class="fas fa-file-alt"></i> @Html.DisplayNameFor(model => model.Brgy_Cert_Path)</th>
+                                <th><i class="fas fa-id-card"></i> @Html.DisplayNameFor(model => model.Valid_ID_Path)</th>
+                                <th><i class="fas fa-comment"></i> @Html.DisplayNameFor(model => model.Reason)</th>
+                                <th><i class="fas fa-info-circle"></i> @Html.DisplayNameFor(model => model.Status)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Where(x => Enum.GetName(typeof(ActiveStatus), x.Status) == acceptedStatus))
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Packs)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Barangay)</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Brgy_Cert_Path))
+                                        {
+                                            var extension = System.IO.Path.GetExtension(item.Brgy_Cert_Path)?.ToLower();
+                                            if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                            {
+                                                <img src="@Url.Content(item.Brgy_Cert_Path)" alt="@item.Brgy_Cert" width="100" />
+                                            }
+                                            else
+                                            {
+                                                <span>Non-image file</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span>No file</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Valid_ID_Path))
+                                        {
+                                            var extension = System.IO.Path.GetExtension(item.Valid_ID_Path)?.ToLower();
+                                            if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                            {
+                                                <img src="@Url.Content(item.Valid_ID_Path)" alt="@item.Valid_ID" width="100" />
+                                            }
+                                            else
+                                            {
+                                                <span>Non-image file</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span>No file</span>
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Reason)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Details</a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Rejected Tab -->
+                <div class="tab-pane fade" id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
+                    <h3>Rejected Applications</h3>
+                    <table class="table table-striped table-bordered" id="rejectedTable">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.FullName)</th>
+                                <th><i class="fas fa-boxes"></i> @Html.DisplayNameFor(model => model.Packs)</th>
+                                <th><i class="fas fa-map-marker-alt"></i> @Html.DisplayNameFor(model => model.Barangay)</th>
+                                <th><i class="fas fa-file-alt"></i> @Html.DisplayNameFor(model => model.Brgy_Cert_Path)</th>
+                                <th><i class="fas fa-id-card"></i> @Html.DisplayNameFor(model => model.Valid_ID_Path)</th>
+                                <th><i class="fas fa-comment"></i> @Html.DisplayNameFor(model => model.Reason)</th>
+                                <th><i class="fas fa-info-circle"></i> @Html.DisplayNameFor(model => model.Status)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Where(x => Enum.GetName(typeof(ActiveStatus), x.Status) == rejectedStatus))
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Packs)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Barangay)</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Brgy_Cert_Path))
+                                        {
+                                            var extension = System.IO.Path.GetExtension(item.Brgy_Cert_Path)?.ToLower();
+                                            if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                            {
+                                                <img src="@Url.Content(item.Brgy_Cert_Path)" alt="@item.Brgy_Cert" width="100" />
+                                            }
+                                            else
+                                            {
+                                                <span>Non-image file</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span>No file</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Valid_ID_Path))
+                                        {
+                                            var extension = System.IO.Path.GetExtension(item.Valid_ID_Path)?.ToLower();
+                                            if (!string.IsNullOrEmpty(extension) && (extension == ".jpg" || extension == ".jpeg" || extension == ".png"))
+                                            {
+                                                <img src="@Url.Content(item.Valid_ID_Path)" alt="@item.Valid_ID" width="100" />
+                                            }
+                                            else
+                                            {
+                                                <span>Non-image file</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span>No file</span>
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Reason)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Details</a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <!-- Ensure Bootstrap JavaScript is included -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 @section Scripts {
     @{
@@ -296,3 +476,4 @@
         });
     </script>
 }
+ </body>
